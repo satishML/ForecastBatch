@@ -1,13 +1,12 @@
-package com.martinloyd;
+package com.martinloyd.springbatch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class SpringBatchExample1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(SpringBatchExample1Application.class, args);
 	}
-
 }
