@@ -1,24 +1,25 @@
 package com.martinloyd.springbatch.batch;
 
+import java.util.List;
+
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.martinloyd.springbatch.model.User;
-import com.martinloyd.springbatch.repository.UserRepository;
-
-import java.util.List;
+import com.martinloyd.springbatch.model.DHS;
+import com.martinloyd.springbatch.repository.DHSRepository;
 
 @Component
-public class DBWriter implements ItemWriter<User> {
+public class DBWriter implements ItemWriter<DHS> {
 
     @Autowired
-    private UserRepository userRepository;
+    private DHSRepository dhsRepository;
+    
+    
 
     @Override
-    public void write(List<? extends User> users) throws Exception {
-
-        System.out.println("Data Saved for Users: " + users);
-        userRepository.saveAll(users);
+    public void write(List<? extends DHS> dhsList) throws Exception {
+    
+        dhsRepository.saveAll(dhsList);
     }
 }

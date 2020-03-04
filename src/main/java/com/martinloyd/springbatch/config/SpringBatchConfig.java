@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
-import com.martinloyd.springbatch.model.User;
+import com.martinloyd.springbatch.model.DHS;
 
 @Configuration
 @EnableBatchProcessing
@@ -27,13 +27,13 @@ public class SpringBatchConfig {
     @Bean
     public Job job(JobBuilderFactory jobBuilderFactory,
                    StepBuilderFactory stepBuilderFactory,
-                   ItemReader<User> itemReader,
-                   ItemProcessor<User, User> itemProcessor,
-                   ItemWriter<User> itemWriter
+                   ItemReader<DHS> itemReader,
+                   ItemProcessor<DHS, DHS> itemProcessor,
+                   ItemWriter<DHS> itemWriter
     ) {
 
         Step step = stepBuilderFactory.get("ETL-file-load")
-                .<User, User>chunk(100)
+                .<DHS, DHS>chunk(100)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
@@ -47,9 +47,9 @@ public class SpringBatchConfig {
     }
 
     @Bean
-    public FlatFileItemReader<User> itemReader() {
-
-        FlatFileItemReader<User> flatFileItemReader = new FlatFileItemReader<>();
+    public FlatFileItemReader<DHS> itemReader() {
+    
+        FlatFileItemReader<DHS> flatFileItemReader = new FlatFileItemReader<>();
         flatFileItemReader.setResource(new FileSystemResource("src/main/resources/APFS1.csv"));
         flatFileItemReader.setName("CSV-Reader");
         flatFileItemReader.setLinesToSkip(1);
@@ -58,17 +58,18 @@ public class SpringBatchConfig {
     }
 
     @Bean
-    public LineMapper<User> lineMapper() {
+    public LineMapper<DHS> lineMapper() {
 
-        DefaultLineMapper<User> defaultLineMapper = new DefaultLineMapper<>();
+        DefaultLineMapper<DHS> defaultLineMapper = new DefaultLineMapper<>();
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
 
         lineTokenizer.setDelimiter(",");
+       // lineTokenizer.setIncludedFields(1);
         lineTokenizer.setStrict(false);
-        lineTokenizer.setNames(new String[]{"APFS Number", "Description"});
+        lineTokenizer.setNames(new String[]{"listing_id", 	"title",	"description", 	"agency", 	"organization", "region", 	"pop_city", 	"pop_state", 	"pop_country", 	"naics_code", 	"requirement_type", "base_all_options", 	"base_all_options_value", 	"award_status", 	"est_contract_value_min",	"est_contract_value_max", 	"task_del_order_dollar_amount", 	"current_fy_proj_obl", 	"fund_source", 	"est_award_fiscal_quarter",	"est_award_fiscal_year", 	"est_solicitation_date",	"link_to_solicitation", 	"period_of_perform_start", 	"period_of_perform_end","ultimate_completion_date", "current_completion_date", "acquisition_strategy_type", "contract_type", "procurement_method","extent_competed", 	"contractor_name", 	"awarded_contract_order", 	"type_of_awardee", 	"award_type", 	"listing_manager_email", 	"point_of_contact_name", 	"point_of_contact_email", 	"small_bus_specialist", "additional_info", 	"last_modified_date","published","poc_phone","data_source"});
 
-        BeanWrapperFieldSetMapper<User> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-        fieldSetMapper.setTargetType(User.class);
+        BeanWrapperFieldSetMapper<DHS> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(DHS.class);
 
         defaultLineMapper.setLineTokenizer(lineTokenizer);
         defaultLineMapper.setFieldSetMapper(fieldSetMapper);
