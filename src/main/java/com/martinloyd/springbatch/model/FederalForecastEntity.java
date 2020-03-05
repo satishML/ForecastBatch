@@ -6,17 +6,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "federal_forecast_test")
-public class DHS {
+public class FederalForecastEntity {
 
 	@Id
-	private int id;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	private String listing_id; 
 	private String title;
 	private String description; 

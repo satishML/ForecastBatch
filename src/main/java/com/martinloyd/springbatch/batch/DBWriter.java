@@ -6,20 +6,22 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.martinloyd.springbatch.model.DHS;
-import com.martinloyd.springbatch.repository.DHSRepository;
+import com.martinloyd.springbatch.model.FederalForecastEntity;
+import com.martinloyd.springbatch.repository.FederalForecastRepository;
 
 @Component
-public class DBWriter implements ItemWriter<DHS> {
+public class DBWriter implements ItemWriter<FederalForecastEntity> {
 
     @Autowired
-    private DHSRepository dhsRepository;
+    private FederalForecastRepository federalRepository;
     
     
 
     @Override
-    public void write(List<? extends DHS> dhsList) throws Exception {
-    
-        dhsRepository.saveAll(dhsList);
-    }
+    public void write(List<? extends FederalForecastEntity> federalForecastEntityList) throws Exception {
+        
+        if (federalForecastEntityList.size() > 0)   
+        	federalRepository.saveAll(federalForecastEntityList);
+      
+        }
 }
